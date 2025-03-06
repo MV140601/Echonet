@@ -18,8 +18,9 @@ try {
         const decode=await jwt.verify(token,process.env.TOKEN_SECRET);
         console.log(decode);
         req.user=decode.id;
+        console.log("auth successful")
         next();
-     }
+     }  
 } catch (error) {
     console.log(error.message)
 }

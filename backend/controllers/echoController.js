@@ -1,5 +1,5 @@
 import { Echo } from "../models/echoschema.js";
-
+import { User } from "../models/userschema.js";
 export const createEcho=async(req,res)=>{
     try {
         const {Description,id}=req.body;
@@ -27,7 +27,7 @@ try {
    const {id}=req.params ;
    await Echo.findByIdAndDelete(id);
    return res.status(200).json({
-    message:"Tweet Deleted Successfully",
+    message:"Echo Deleted Successfully",
     success:true
    })
 } catch (error) {
@@ -89,3 +89,33 @@ export const LikeorDislike = async (req, res) => {
     }
 };
 
+export const getAllEchos = async (req,res) => {
+    // loggedInUser ka tweet + following user tweet
+    try {
+        const id = req.params.id;
+        const loggedInUser = await User.findById(id);
+        const loggedInUserEchos = await Echo.find({userId:id});
+        const followingUserEcho = await Promise.all(loggedInUser.following.map((otherUsersId)=>{
+            return Echo.find({userId:otherUsersId});
+        }));
+        return res.status(200).json({
+            Echos:loggedInUserEchos.concat(...followingUserEcho),
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const getFollowingEchos = async (req,res) =>{
+    try {
+        const id = req.params.id;
+        const loggedInUser = await User.findById(id); 
+        const followingUserEcho = await Promise.all(loggedInUser.following.map((otherUsersId)=>{
+            return Echo.find({userId:otherUsersId});
+        }));
+        return res.status(200).json({
+            Echos:[].concat(...followingUserEcho)
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
