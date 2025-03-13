@@ -4,7 +4,8 @@ import logo from '../assests/echonetlogo.jpg';
 import toast from "react-hot-toast";
 import axios from "axios"; 
 import { USER_API_END_POINT } from "../utils/constant";
- 
+ import { useDispatch } from 'react-redux';
+ import { getUser } from '../redux/userSlice';
 
 
 const Login = () => {
@@ -14,7 +15,7 @@ const Login = () => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const navigate = useNavigate();
- 
+ const dispatch=useDispatch();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -28,10 +29,10 @@ const Login = () => {
           },
           withCredentials: true
         }); 
-        // dispatch(getUser(res?.data?.user));
+        dispatch(getUser(res?.data?.user));
         console.log(res);
         if(res.data.success){
-         // navigate("/");
+          navigate("/");
          console.log(res.data.message);
           toast.success(res.data.message);
         }
