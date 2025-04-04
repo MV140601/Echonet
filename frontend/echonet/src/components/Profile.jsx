@@ -3,14 +3,15 @@ import banner from '../assests/banner.jpg';
 import profile from '../assests/profile.jpg'
 import Avatar from 'react-avatar';
 import { IoMdArrowBack } from "react-icons/io";
-import { Link } from 'react-router-dom';
+import { Link,useParams  } from 'react-router-dom';
 import useCustomGetProfile from '../hooks/usecustomGetProfile';
 import { useSelector } from 'react-redux'
 const Profile = () => {
  
    const {user,profile}=useSelector(store=>store.user); 
  console.log("this is from profile page--->",user);
-  useCustomGetProfile(user?._id);
+ const { id } = useParams();
+  useCustomGetProfile(id);
   return (
     <div className='w-[50%] border-r-2 border-l-2 border-gray-200'>
       <div>
@@ -30,7 +31,7 @@ const Profile = () => {
         </div>
         <div className='m-4'>
           <h1 className='font-bold text-xl'>{profile?.Name}</h1>
-          <p>{profile.UserName}</p>
+          <p>{profile?.UserName}</p>
         </div>
         <div>
           <p>this is a developer bio </p>

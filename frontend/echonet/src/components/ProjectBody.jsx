@@ -17,7 +17,7 @@ const ProjectBody = () => {
           element: <Feed />,
         },
         {
-          path: "/profile",
+          path: "/profile/:id",
           element: <Profile />,
         },
       ],

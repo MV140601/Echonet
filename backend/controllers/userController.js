@@ -112,14 +112,15 @@ export const Bookmark = async (req, res) => {
 
 export const getMyProfile = async (req, res) => {
   try {
-    const id = req.params.id;
-    const user = await User.findById(id).select("-Password");
-    return res.status(200).json({ user });
+      const id = req.params.id;
+      const user = await User.findById(id).select("-password");
+      return res.status(200).json({
+          user,
+      })
   } catch (error) {
-    console.log(error);
+      console.log(error);
   }
-}
-
+};
 export const getOtherUsers = async (req, res) => {
   try {
     const {id} = req.params;

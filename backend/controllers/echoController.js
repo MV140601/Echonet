@@ -9,9 +9,12 @@ export const createEcho=async(req,res)=>{
                 success:false
             });
         };
+        const user=await User.findById(id).select("-Password"); 
+        console.log("user",user)
         await Echo.create({
             Description,
-            userId:id
+            userId:id,
+            userDetails:user
         });
         return res.status(201).json({
             message:"Echo Created Successfully",

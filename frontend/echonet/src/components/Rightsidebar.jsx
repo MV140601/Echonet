@@ -2,6 +2,7 @@ import React from 'react'
 import { CiSearch } from "react-icons/ci";
 import logo from '../assests/echonetlogo.jpg'
 import Avatar from 'react-avatar';
+import { Link } from 'react-router-dom';
 const Rightsidebar = ({ otherUsers }) => {
   return (
     <div className="w-[25%] " >
@@ -23,8 +24,9 @@ const Rightsidebar = ({ otherUsers }) => {
                   <p className="text-sm">@{user?.UserName || "unknown"}</p>
                 </div>
               </div>
-              <button className="px-4 py-1 bg-black text-white rounded-full">Profile</button>
-            </div>
+              <Link to={`/profile/${user?._id}`}>
+                    <button className='px-4 py-1 bg-black text-white rounded-full'>Profile</button>
+                  </Link>            </div>
           ))
         ) : (
           <p className="text-gray-500">No users found.</p>
